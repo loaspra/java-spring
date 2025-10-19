@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - FitnessApp</title>
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/css/tabler.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" rel="stylesheet"/>
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        .login-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .login-card {
+            max-width: 400px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="login-wrapper">
+        <div class="login-card">
+            <div class="card card-md">
+                <div class="card-body text-center py-5">
+                    <div class="mb-4">
+                        <i class="ti ti-barbell icon" style="font-size: 3rem; color: #667eea;"></i>
+                    </div>
+                    <h2 class="card-title mb-3">FitnessApp</h2>
+                    <p class="text-secondary mb-4">Ingresa tus credenciales para acceder</p>
+                    
+                    <div th:if="${param.error}" class="alert alert-danger" role="alert">
+                        <div class="d-flex">
+                            <div>
+                                <i class="ti ti-alert-circle icon alert-icon"></i>
+                            </div>
+                            <div>
+                                <h4 class="alert-title">Error de autenticación</h4>
+                                <div class="text-secondary">Email o contraseña incorrectos</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div th:if="${param.logout}" class="alert alert-success" role="alert">
+                        <div class="d-flex">
+                            <div>
+                                <i class="ti ti-check icon alert-icon"></i>
+                            </div>
+                            <div>
+                                <h4 class="alert-title">Sesión cerrada</h4>
+                                <div class="text-secondary">Has cerrado sesión exitosamente</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <form method="post" action="/login" class="text-start">
+                        <div class="mb-3">
+                            <label class="form-label">Email</label>
+                            <input type="email" name="username" class="form-control" 
+                                   placeholder="tu@email.com" required autofocus>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Contraseña</label>
+                            <input type="password" name="password" class="form-control" 
+                                   placeholder="Tu contraseña" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-check">
+                                <input type="checkbox" name="remember-me" class="form-check-input">
+                                <span class="form-check-label">Recordarme</span>
+                            </label>
+                        </div>
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                        <div class="form-footer">
+                            <button type="submit" class="btn btn-primary w-100">
+                                <i class="ti ti-login icon"></i>
+                                Iniciar Sesión
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="text-center text-white mt-3">
+                <small>&copy; 2025 FitnessApp. Todos los derechos reservados.</small>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta17/dist/js/tabler.min.js"></script>
+</body>
+</html>

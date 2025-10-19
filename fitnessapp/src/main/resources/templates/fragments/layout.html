@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(title, content)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${title}">FitnessApp</title>
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta19/dist/css/tabler.min.css" rel="stylesheet"/>
+    <link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" rel="stylesheet"/>
+</head>
+<body>
+    <div class="page">
+        <header class="navbar navbar-expand-md navbar-light d-print-none">
+            <div class="container-xl">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
+                    <a href="/">
+                        <i class="ti ti-barbell icon"></i>
+                        FitnessApp
+                    </a>
+                </h1>
+                <div class="navbar-nav flex-row order-md-last">
+                    <div class="nav-item d-none d-md-flex me-3">
+                        <div class="btn-list">
+                            <a href="/clientes" class="btn btn-primary">
+                                <i class="ti ti-users icon"></i>
+                                Clientes
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <div class="page-wrapper">
+            <div class="page-header d-print-none">
+                <div class="container-xl">
+                    <div class="row g-2 align-items-center">
+                        <div class="col">
+                            <h2 class="page-title" th:text="${title}">Page Title</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="page-body">
+                <div class="container-xl">
+                    <div th:if="${message}" class="alert alert-success alert-dismissible" role="alert">
+                        <div class="d-flex">
+                            <div>
+                                <i class="ti ti-check icon alert-icon"></i>
+                            </div>
+                            <div>
+                                <h4 class="alert-title">Éxito</h4>
+                                <div class="text-secondary" th:text="${message}"></div>
+                            </div>
+                        </div>
+                        <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+                    </div>
+                    
+                    <div th:if="${error}" class="alert alert-danger alert-dismissible" role="alert">
+                        <div class="d-flex">
+                            <div>
+                                <i class="ti ti-alert-circle icon alert-icon"></i>
+                            </div>
+                            <div>
+                                <h4 class="alert-title">Error</h4>
+                                <div class="text-secondary" th:text="${error}"></div>
+                            </div>
+                        </div>
+                        <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
+                    </div>
+                    
+                    <div th:replace="${content}"></div>
+                </div>
+            </div>
+            
+            <footer class="footer footer-transparent d-print-none">
+                <div class="container-xl">
+                    <div class="row text-center align-items-center flex-row-reverse">
+                        <div class="col-12 col-lg-auto mt-3 mt-lg-0">
+                            <ul class="list-inline list-inline-dots mb-0">
+                                <li class="list-inline-item">
+                                    FitnessApp &copy; 2025
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta19/dist/js/tabler.min.js"></script>
+</body>
+</html>

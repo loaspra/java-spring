@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::content})}">
+<head>
+    <title th:text="'Detalles de ' + ${cliente.nombre} + ' ' + ${cliente.apellidos} + ' - FitnessApp'">Cliente - FitnessApp</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <div class="row row-cards">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Detalles del Cliente</h3>
+                        <div class="ms-auto">
+                            <div class="btn-list">
+                                <a th:href="@{/clientes/editar/{id}(id=${cliente.idCliente})}" class="btn btn-primary">
+                                    <i class="ti ti-edit icon"></i>
+                                    Editar
+                                </a>
+                                <a href="/clientes" class="btn btn-secondary">
+                                    <i class="ti ti-arrow-left icon"></i>
+                                    Volver
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-12">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="avatar avatar-xl me-3" style="background-color: #206bc4">
+                                        <span th:text="${#strings.substring(cliente.nombre, 0, 1) + #strings.substring(cliente.apellidos, 0, 1)}" 
+                                              class="avatar-title">JP</span>
+                                    </div>
+                                    <div>
+                                        <h2 class="mb-1" th:text="${cliente.nombre + ' ' + cliente.apellidos}">Juan Pérez</h2>
+                                        <div class="text-secondary">
+                                            <span th:if="${cliente.estado}" class="badge bg-success">Activo</span>
+                                            <span th:if="${!cliente.estado}" class="badge bg-danger">Inactivo</span>
+                                            <span class="ms-2" th:text="'Cliente #' + ${cliente.idCliente}">Cliente #1</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <div class="text-secondary mb-1">
+                                        <i class="ti ti-mail icon me-1"></i>
+                                        Email
+                                    </div>
+                                    <div th:text="${cliente.email}">juan@example.com</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="text-secondary mb-1">
+                                        <i class="ti ti-phone icon me-1"></i>
+                                        Teléfono
+                                    </div>
+                                    <div th:text="${cliente.telefono != null ? cliente.telefono : 'No registrado'}">+1234567890</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="text-secondary mb-1">
+                                        <i class="ti ti-calendar icon me-1"></i>
+                                        Fecha de Nacimiento
+                                    </div>
+                                    <div th:text="${cliente.fechaNacimiento != null ? #temporals.format(cliente.fechaNacimiento, 'dd/MM/yyyy') : 'No registrada'}">01/01/1990</div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <div class="text-secondary mb-1">
+                                        <i class="ti ti-id icon me-1"></i>
+                                        RUT
+                                    </div>
+                                    <div th:text="${cliente.rut != null ? cliente.rut : 'No registrado'}">12345678-9</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="text-secondary mb-1">
+                                        <i class="ti ti-map-pin icon me-1"></i>
+                                        Dirección
+                                    </div>
+                                    <div th:text="${cliente.direccion != null ? cliente.direccion : 'No registrada'}">Calle Principal 123</div>
+                                </div>
+                                
+                                <div class="mb-3" th:if="${cliente.fechaRegistro != null}">
+                                    <div class="text-secondary mb-1">
+                                        <i class="ti ti-calendar-event icon me-1"></i>
+                                        Fecha de Registro
+                                    </div>
+                                    <div th:text="${#temporals.format(cliente.fechaRegistro, 'dd/MM/yyyy HH:mm')}">01/01/2025 10:00</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" 
+                                        class="btn btn-danger"
+                                        th:onclick="'confirmDelete(' + ${cliente.idCliente} + ')'">
+                                    <i class="ti ti-trash icon"></i>
+                                    Eliminar Cliente
+                                </button>
+                            </div>
+                            <div class="col-auto">
+                                <form th:action="@{/clientes/toggle-estado/{id}(id=${cliente.idCliente})}" 
+                                      method="post" class="d-inline">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    <button type="submit" 
+                                            th:class="${cliente.estado ? 'btn btn-warning' : 'btn btn-success'}"
+                                            th:text="${cliente.estado ? 'Desactivar Cliente' : 'Activar Cliente'}">
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <form id="deleteForm" method="post" style="display: none;">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <input type="hidden" name="_method" value="delete">
+        </form>
+        
+        <script>
+            function confirmDelete(id) {
+                if (confirm('¿Está seguro que desea eliminar este cliente? Esta acción no se puede deshacer.')) {
+                    const form = document.getElementById('deleteForm');
+                    form.action = '/clientes/eliminar/' + id;
+                    form.submit();
+                }
+            }
+        </script>
+    </div>
+</body>
+</html>

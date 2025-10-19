@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::content})}">
+<head>
+    <title th:text="${clienteDTO.idCliente == null ? 'Nuevo Cliente' : 'Editar Cliente'} + ' - FitnessApp'">Cliente - FitnessApp</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <div class="row row-cards">
+            <div class="col-12">
+                <form th:action="@{/clientes/guardar}" 
+                      method="post" th:object="${clienteDTO}">
+                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                    <input type="hidden" th:if="${clienteDTO.idCliente != null}" th:field="*{idCliente}">
+                    
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title" th:text="${clienteDTO.idCliente == null ? 'Nuevo Cliente' : 'Editar Cliente'}">Formulario Cliente</h3>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label required">RUT</label>
+                                    <input type="text" class="form-control" 
+                                           th:field="*{rut}"
+                                           th:classappend="${#fields.hasErrors('rut')} ? 'is-invalid' : ''"
+                                           placeholder="12345678-9">
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('rut')}" 
+                                         th:errors="*{rut}">Error</div>
+                                    <small class="form-hint">Formato: 12345678-9</small>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label required">Email</label>
+                                    <input type="email" class="form-control" 
+                                           th:field="*{email}"
+                                           th:classappend="${#fields.hasErrors('email')} ? 'is-invalid' : ''"
+                                           placeholder="ejemplo@email.com">
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('email')}" 
+                                         th:errors="*{email}">Error</div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label required">Nombre</label>
+                                    <input type="text" class="form-control" 
+                                           th:field="*{nombre}"
+                                           th:classappend="${#fields.hasErrors('nombre')} ? 'is-invalid' : ''"
+                                           placeholder="Ingrese el nombre">
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('nombre')}" 
+                                         th:errors="*{nombre}">Error</div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label required">Apellidos</label>
+                                    <input type="text" class="form-control" 
+                                           th:field="*{apellidos}"
+                                           th:classappend="${#fields.hasErrors('apellidos')} ? 'is-invalid' : ''"
+                                           placeholder="Ingrese los apellidos">
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('apellidos')}" 
+                                         th:errors="*{apellidos}">Error</div>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Teléfono</label>
+                                    <input type="text" class="form-control" 
+                                           th:field="*{telefono}"
+                                           th:classappend="${#fields.hasErrors('telefono')} ? 'is-invalid' : ''"
+                                           placeholder="+56912345678">
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('telefono')}" 
+                                         th:errors="*{telefono}">Error</div>
+                                </div>
+                                
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label">Fecha de Nacimiento</label>
+                                    <input type="date" class="form-control" 
+                                           th:field="*{fechaNacimiento}"
+                                           th:classappend="${#fields.hasErrors('fechaNacimiento')} ? 'is-invalid' : ''">
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('fechaNacimiento')}" 
+                                         th:errors="*{fechaNacimiento}">Error</div>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Dirección</label>
+                                <textarea class="form-control" 
+                                          th:field="*{direccion}"
+                                          rows="3"
+                                          placeholder="Ingrese la dirección completa"></textarea>
+                            </div>
+                            
+                            <div class="row" th:if="${clienteDTO.idCliente == null}">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label required">Contraseña</label>
+                                    <input type="password" class="form-control" 
+                                           th:field="*{password}"
+                                           th:classappend="${#fields.hasErrors('password')} ? 'is-invalid' : ''"
+                                           placeholder="Mínimo 6 caracteres">
+                                    <div class="invalid-feedback" th:if="${#fields.hasErrors('password')}" 
+                                         th:errors="*{password}">Error</div>
+                                    <small class="form-hint">La contraseña debe tener al menos 6 caracteres</small>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3" th:if="${clienteDTO.idCliente != null}">
+                                <label class="form-check">
+                                    <input type="checkbox" class="form-check-input" th:field="*{estado}">
+                                    <span class="form-check-label">Cliente activo</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="card-footer text-end">
+                            <div class="d-flex">
+                                <a href="/clientes" class="btn btn-link">Cancelar</a>
+                                <button type="submit" class="btn btn-primary ms-auto">
+                                    <i class="ti ti-device-floppy icon"></i>
+                                    Guardar
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
