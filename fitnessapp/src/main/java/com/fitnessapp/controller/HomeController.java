@@ -1,6 +1,7 @@
 package com.fitnessapp.controller;
 
 import com.fitnessapp.service.ClienteService;
+import com.fitnessapp.service.ClaseService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class HomeController {
     
     private final ClienteService clienteService;
+    private final ClaseService claseService;
     
     @GetMapping("/")
     public String root() {
@@ -21,6 +23,7 @@ public class HomeController {
     public String home(Model model) {
         model.addAttribute("totalClientes", clienteService.countAll());
         model.addAttribute("clientesActivos", clienteService.countByEstado(true));
+        model.addAttribute("totalClases", claseService.countAll());
         model.addAttribute("clasesHoy", 0);
         model.addAttribute("reservas", 0);
         return "home";

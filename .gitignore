@@ -5,6 +5,9 @@ target/
 *.ear
 *.class
 .m2/
+.mvn/
+mvnw
+mvnw.cmd
 
 # IDE
 .idea/
@@ -51,6 +54,7 @@ azure-connection-info.txt
 secrets/
 .env
 .env.local
+fitnessapp/src/main/resources/application.properties
 
 # OS
 .DS_Store

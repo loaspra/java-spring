@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout(~{::title}, ~{::content})}">
+<head>
+    <title th:text="'Detalles de ' + ${clase.nombre} + ' - FitnessApp'">Clase - FitnessApp</title>
+</head>
+<body>
+    <div th:fragment="content">
+        <div class="row row-cards">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Detalles de la Clase</h3>
+                        <div class="ms-auto">
+                            <div class="btn-list">
+                                <a th:href="@{/clases/editar/{id}(id=${clase.idClase})}" class="btn btn-primary">
+                                    <i class="ti ti-edit icon"></i>
+                                    Editar
+                                </a>
+                                <a href="/clases" class="btn btn-secondary">
+                                    <i class="ti ti-arrow-left icon"></i>
+                                    Volver
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="row mb-4">
+                            <div class="col-md-12">
+                                <div class="d-flex align-items-center mb-3">
+                                    <div class="avatar avatar-xl me-3" style="background-color: #206bc4">
+                                        <span th:text="${#strings.substring(clase.nombre, 0, 1)}" 
+                                              class="avatar-title">Y</span>
+                                    </div>
+                                    <div>
+                                        <h2 class="mb-1" th:text="${clase.nombre}">Yoga</h2>
+                                        <div class="text-secondary">
+                                            <span th:if="${clase.nivel == 'Principiante'}" class="badge bg-info">Principiante</span>
+                                            <span th:if="${clase.nivel == 'Intermedio'}" class="badge bg-warning">Intermedio</span>
+                                            <span th:if="${clase.nivel == 'Avanzado'}" class="badge bg-danger">Avanzado</span>
+                                            <span th:if="${clase.estado}" class="badge bg-success ms-2">Activa</span>
+                                            <span th:if="${!clase.estado}" class="badge bg-danger ms-2">Inactiva</span>
+                                            <span class="ms-2" th:text="'Clase #' + ${clase.idClase}">Clase #1</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <div class="text-secondary mb-1">
+                                        <i class="ti ti-clock icon me-1"></i>
+                                        Duración
+                                    </div>
+                                    <div th:text="${clase.duracionMinutos + ' minutos'}">60 minutos</div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <div class="text-secondary mb-1">
+                                        <i class="ti ti-users icon me-1"></i>
+                                        Capacidad Máxima
+                                    </div>
+                                    <div th:text="${clase.capacidadMaxima + ' personas'}">20 personas</div>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <div class="text-secondary mb-1">
+                                        <i class="ti ti-list-details icon me-1"></i>
+                                        Descripción
+                                    </div>
+                                    <div th:text="${clase.descripcion != null && !clase.descripcion.isEmpty() ? clase.descripcion : 'No registrada'}">
+                                        Una clase de yoga relajante
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card-footer">
+                        <div class="row">
+                            <div class="col">
+                                <button type="button" 
+                                        class="btn btn-danger"
+                                        th:onclick="'confirmDelete(' + ${clase.idClase} + ')'">
+                                    <i class="ti ti-trash icon"></i>
+                                    Eliminar Clase
+                                </button>
+                            </div>
+                            <div class="col-auto">
+                                <form th:action="@{/clases/toggle-estado/{id}(id=${clase.idClase})}" 
+                                      method="post" class="d-inline">
+                                    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+                                    <button type="submit" 
+                                            th:class="${clase.estado ? 'btn btn-warning' : 'btn btn-success'}"
+                                            th:text="${clase.estado ? 'Desactivar Clase' : 'Activar Clase'}">
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <form id="deleteForm" method="post" style="display: none;">
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <input type="hidden" name="_method" value="delete">
+        </form>
+        
+        <script>
+            function confirmDelete(id) {
+                if (confirm('¿Está seguro que desea eliminar esta clase? Esta acción no se puede deshacer.')) {
+                    const form = document.getElementById('deleteForm');
+                    form.action = '/clases/eliminar/' + id;
+                    form.submit();
+                }
+            }
+        </script>
+    </div>
+</body>
+</html>
