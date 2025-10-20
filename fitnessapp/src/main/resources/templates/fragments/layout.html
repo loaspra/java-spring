@@ -1,97 +1,130 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" th:fragment="layout(title, content)">
+<html xmlns:th="http://www.thymeleaf.org" 
+      th:fragment="layout(title, content)"
+      lang="en"
+      class="light-style layout-menu-fixed"
+      dir="ltr"
+      data-theme="theme-default"
+      data-template="vertical-menu-template">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
     <title th:text="${title}">FitnessApp</title>
-    <link href="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta19/dist/css/tabler.min.css" rel="stylesheet"/>
-    <link href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" rel="stylesheet"/>
+    <meta name="description" content="" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="/vendor/fonts/boxicons.css" />
+
+    <link rel="stylesheet" href="/vendor/css/core.css" class="template-customizer-core-css" />
+    <link rel="stylesheet" href="/vendor/css/theme-default.css" class="template-customizer-theme-css" />
+    <link rel="stylesheet" href="/css/demo.css" />
+    <link rel="stylesheet" href="/css/custom-theme.css" />
+
+    <link rel="stylesheet" href="/vendor/libs/perfect-scrollbar/perfect-scrollbar.css" />
+    <link rel="stylesheet" href="/vendor/libs/apex-charts/apex-charts.css" />
+
+    <script src="/vendor/js/helpers.js"></script>
+    <script src="/js/config.js"></script>
 </head>
+
 <body>
-    <div class="page">
-        <header class="navbar navbar-expand-md navbar-light d-print-none">
-            <div class="container-xl">
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar-menu">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <h1 class="navbar-brand navbar-brand-autodark d-none-navbar-horizontal pe-0 pe-md-3">
-                    <a href="/">
-                        <i class="ti ti-barbell icon"></i>
-                        FitnessApp
+    <div class="layout-wrapper layout-content-navbar">
+        <div class="layout-container">
+            <aside id="layout-menu" class="layout-menu menu-vertical menu bg-menu-theme">
+                <div class="app-brand demo">
+                    <a href="/" class="app-brand-link">
+                        <span class="app-brand-logo demo">
+                            <i class="bx bxs-dumbbell" style="font-size: 32px; color: #3e6e1f;"></i>
+                        </span>
+                        <span class="app-brand-text demo menu-text fw-bold">FitnessApp</span>
                     </a>
-                </h1>
-                <div class="navbar-nav flex-row order-md-last">
-                    <div class="nav-item d-none d-md-flex me-3">
-                        <div class="btn-list">
-                            <a href="/clientes" class="btn btn-primary">
-                                <i class="ti ti-users icon"></i>
-                                Clientes
-                            </a>
-                        </div>
-                    </div>
+
+                    <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-xl-none">
+                        <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                    </a>
                 </div>
-            </div>
-        </header>
-        
-        <div class="page-wrapper">
-            <div class="page-header d-print-none">
-                <div class="container-xl">
-                    <div class="row g-2 align-items-center">
-                        <div class="col">
-                            <h2 class="page-title" th:text="${title}">Page Title</h2>
+
+                <div class="menu-inner-shadow"></div>
+
+                <ul class="menu-inner py-1 ps-0">
+                    <li class="menu-item">
+                        <a href="/" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-home-circle"></i>
+                            <div data-i18n="Analytics">Dashboard</div>
+                        </a>
+                    </li>
+
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Gestión</span>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/clientes" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-user"></i>
+                            <div data-i18n="Clientes">Clientes</div>
+                        </a>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/clases" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-calendar"></i>
+                            <div data-i18n="Clases">Clases</div>
+                        </a>
+                    </li>
+
+                    <li class="menu-header small text-uppercase">
+                        <span class="menu-header-text">Otros</span>
+                    </li>
+                    <li class="menu-item">
+                        <a href="/logout" class="menu-link">
+                            <i class="menu-icon tf-icons bx bx-log-out"></i>
+                            <div data-i18n="Logout">Cerrar Sesión</div>
+                        </a>
+                    </li>
+                </ul>
+            </aside>
+
+            <div class="layout-page">
+                <div class="content-wrapper">
+                    <div class="container-xxl flex-grow-1 container-p-y">
+                        <div th:if="${message}" class="alert alert-success alert-dismissible fade show" role="alert">
+                            <strong>Éxito!</strong> <span th:text="${message}"></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                         </div>
+                        
+                        <div th:if="${error}" class="alert alert-danger alert-dismissible fade show" role="alert">
+                            <strong>Error!</strong> <span th:text="${error}"></span>
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+
+                        <div th:replace="${content}"></div>
                     </div>
-                </div>
-            </div>
-            
-            <div class="page-body">
-                <div class="container-xl">
-                    <div th:if="${message}" class="alert alert-success alert-dismissible" role="alert">
-                        <div class="d-flex">
-                            <div>
-                                <i class="ti ti-check icon alert-icon"></i>
-                            </div>
-                            <div>
-                                <h4 class="alert-title">Éxito</h4>
-                                <div class="text-secondary" th:text="${message}"></div>
+
+                    <footer class="content-footer footer bg-footer-theme">
+                        <div class="container-xxl d-flex flex-wrap justify-content-between py-2 flex-md-row flex-column">
+                            <div class="mb-2 mb-md-0">
+                                <span class="text-muted">© 2025
+                                    <a href="/" class="fw-bold">FitnessApp</a>
+                                    - Gym Management System
+                                </span>
                             </div>
                         </div>
-                        <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
-                    </div>
+                    </footer>
                     
-                    <div th:if="${error}" class="alert alert-danger alert-dismissible" role="alert">
-                        <div class="d-flex">
-                            <div>
-                                <i class="ti ti-alert-circle icon alert-icon"></i>
-                            </div>
-                            <div>
-                                <h4 class="alert-title">Error</h4>
-                                <div class="text-secondary" th:text="${error}"></div>
-                            </div>
-                        </div>
-                        <a class="btn-close" data-bs-dismiss="alert" aria-label="close"></a>
-                    </div>
-                    
-                    <div th:replace="${content}"></div>
+                    <div class="content-backdrop fade"></div>
                 </div>
             </div>
-            
-            <footer class="footer footer-transparent d-print-none">
-                <div class="container-xl">
-                    <div class="row text-center align-items-center flex-row-reverse">
-                        <div class="col-12 col-lg-auto mt-3 mt-lg-0">
-                            <ul class="list-inline list-inline-dots mb-0">
-                                <li class="list-inline-item">
-                                    FitnessApp &copy; 2025
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-            </footer>
         </div>
     </div>
-    
-    <script src="https://cdn.jsdelivr.net/npm/@tabler/core@1.0.0-beta19/dist/js/tabler.min.js"></script>
+
+    <div class="layout-overlay layout-menu-toggle"></div>
+
+    <script src="/vendor/libs/jquery/jquery.js"></script>
+    <script src="/vendor/libs/popper/popper.js"></script>
+    <script src="/vendor/js/bootstrap.js"></script>
+    <script src="/vendor/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    <script src="/vendor/libs/apex-charts/apexcharts.js"></script>
+    <script src="/js/main.js"></script>
 </body>
 </html>

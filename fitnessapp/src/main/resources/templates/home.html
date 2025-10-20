@@ -1,160 +1,176 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{fragments/layout :: layout('Dashboard - FitnessApp', ~{::content})}">
+      th:replace="~{fragments/layout :: layout('Dashboard', ~{::content})}">
 <head>
     <title>Dashboard - FitnessApp</title>
 </head>
 <body>
     <div th:fragment="content">
-        <div class="page-header d-print-none">
-            <div class="container-xl">
-                <div class="row g-2 align-items-center">
-                    <div class="col">
-                        <h2 class="page-title">Dashboard</h2>
-                        <div class="text-secondary mt-1">Bienvenido al sistema de gestión FitnessApp</div>
+        <div class="row">
+            <div class="col-12">
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Bienvenido a FitnessApp</h5>
+                        <p class="text-muted">Sistema de Gestión Integral para Gimnasios y Estudios Fitness</p>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <div class="page-body">
-            <div class="container-xl">
-                <div class="row row-deck row-cards">
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="subheader">Total Clientes</div>
+
+        <div class="row">
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="content-left">
+                                <span class="text-heading">Total Clientes</span>
+                                <div class="d-flex align-items-end my-2">
+                                    <h3 class="card-title mb-0 me-2" th:text="${totalClientes}">0</h3>
                                 </div>
-                                <div class="h1 mb-3" th:text="${totalClientes}">0</div>
-                                <div class="d-flex mb-2">
-                                    <div>Clientes registrados en el sistema</div>
-                                </div>
+                                <small class="text-muted">Clientes registrados</small>
                             </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="subheader">Clientes Activos</div>
-                                </div>
-                                <div class="h1 mb-3" th:text="${clientesActivos}">0</div>
-                                <div class="d-flex mb-2">
-                                    <div>Con membresía vigente</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="subheader">Clases Hoy</div>
-                                </div>
-                                <div class="h1 mb-3" th:text="${clasesHoy}">0</div>
-                                <div class="d-flex mb-2">
-                                    <div>Clases programadas</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="col-sm-6 col-lg-3">
-                        <div class="card">
-                            <div class="card-body">
-                                <div class="d-flex align-items-center">
-                                    <div class="subheader">Reservas</div>
-                                </div>
-                                <div class="h1 mb-3" th:text="${reservas}">0</div>
-                                <div class="d-flex mb-2">
-                                    <div>Reservas confirmadas</div>
-                                </div>
+                            <div class="content-right">
+                                <span class="badge bg-label-primary rounded-pill">
+                                    <i class="bx bx-user"></i>
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="row row-deck row-cards mt-3">
-                    <div class="col-12">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Accesos Rápidos</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="row">
-                                    <div class="col-md-4 mb-3">
-                                        <a href="/clientes" class="btn btn-outline-primary w-100 btn-lg">
-                                            <i class="ti ti-users icon"></i>
-                                            Gestión de Clientes
-                                        </a>
-                                    </div>
-                    <div class="col-md-4 mb-3">
-                        <a href="/clases" class="btn btn-outline-primary w-100 btn-lg">
-                            <i class="ti ti-books icon"></i>
-                            Gestión de Clases
-                        </a>
-                    </div>
-                                    <div class="col-md-4 mb-3">
-                                        <button class="btn btn-outline-secondary w-100 btn-lg" disabled>
-                                            <i class="ti ti-ticket icon"></i>
-                                            Membresías
-                                        </button>
-                                        <small class="text-muted d-block text-center mt-1">Próximamente</small>
-                                    </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="content-left">
+                                <span class="text-heading">Clientes Activos</span>
+                                <div class="d-flex align-items-end my-2">
+                                    <h3 class="card-title mb-0 me-2" th:text="${clientesActivos}">0</h3>
                                 </div>
+                                <small class="text-muted">Con membresía vigente</small>
+                            </div>
+                            <div class="content-right">
+                                <span class="badge bg-label-success rounded-pill">
+                                    <i class="bx bx-check-circle"></i>
+                                </span>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <div class="row row-deck row-cards mt-3">
-                    <div class="col-lg-8">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Actividad Reciente</h3>
-                            </div>
-                            <div class="card-body">
-                                <div class="empty">
-                                    <div class="empty-icon">
-                                        <i class="ti ti-list icon"></i>
-                                    </div>
-                                    <p class="empty-title">No hay actividad reciente</p>
-                                    <p class="empty-subtitle text-secondary">
-                                        Las actividades del sistema se mostrarán aquí
-                                    </p>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="content-left">
+                                <span class="text-heading">Clases Hoy</span>
+                                <div class="d-flex align-items-end my-2">
+                                    <h3 class="card-title mb-0 me-2" th:text="${clasesHoy}">0</h3>
                                 </div>
+                                <small class="text-muted">Programadas</small>
+                            </div>
+                            <div class="content-right">
+                                <span class="badge bg-label-warning rounded-pill">
+                                    <i class="bx bx-calendar"></i>
+                                </span>
                             </div>
                         </div>
                     </div>
-                    
-                    <div class="col-lg-4">
-                        <div class="card">
-                            <div class="card-header">
-                                <h3 class="card-title">Sistema</h3>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6 col-sm-6 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div class="content-left">
+                                <span class="text-heading">Reservas</span>
+                                <div class="d-flex align-items-end my-2">
+                                    <h3 class="card-title mb-0 me-2" th:text="${reservas}">0</h3>
+                                </div>
+                                <small class="text-muted">Confirmadas</small>
                             </div>
-                            <div class="card-body">
-                                <div class="mb-3">
-                                    <div class="text-secondary mb-1">Estado del Sistema</div>
-                                    <div class="d-flex align-items-center">
-                                        <span class="status-indicator status-green status-indicator-animated me-2"></span>
-                                        <span>Operativo</span>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <div class="text-secondary mb-1">Base de Datos</div>
-                                    <div class="d-flex align-items-center">
-                                        <span class="status-indicator status-green status-indicator-animated me-2"></span>
-                                        <span>Azure SQL Conectado</span>
-                                    </div>
-                                </div>
-                                <div class="mb-3">
-                                    <div class="text-secondary mb-1">Versión</div>
-                                    <div>1.0.0</div>
-                                </div>
+                            <div class="content-right">
+                                <span class="badge bg-label-info rounded-pill">
+                                    <i class="bx bx-bookmark"></i>
+                                </span>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header d-flex align-items-center">
+                        <h5 class="card-title mb-0">Accesos Rápidos</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <a href="/clientes" class="btn btn-primary w-100 py-2">
+                                    <i class="bx bx-user me-2"></i> Gestión de Clientes
+                                </a>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <a href="/clases" class="btn btn-primary w-100 py-2">
+                                    <i class="bx bx-calendar-check me-2"></i> Gestión de Clases
+                                </a>
+                            </div>
+                            <div class="col-md-4 mb-3">
+                                <button class="btn btn-light w-100 py-2" disabled>
+                                    <i class="bx bx-credit-card me-2"></i> Membresías
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-lg-8 mb-4">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Actividad Reciente</h5>
+                    </div>
+                    <div class="card-body text-center py-5">
+                        <div class="empty-state">
+                            <i class="bx bx-inbox" style="font-size: 48px; color: #ddd;"></i>
+                            <p class="mt-3 text-muted">No hay actividad reciente</p>
+                            <small class="text-secondary">Las actividades del sistema se mostrarán aquí</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <h5 class="card-title mb-0">Estado del Sistema</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="mb-3">
+                            <small class="text-muted d-block mb-1">Sistema</small>
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-success me-2">●</span>
+                                <span>Operativo</span>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <small class="text-muted d-block mb-1">Base de Datos</small>
+                            <div class="d-flex align-items-center">
+                                <span class="badge bg-success me-2">●</span>
+                                <span>Azure SQL Conectado</span>
+                            </div>
+                        </div>
+                        <div>
+                            <small class="text-muted d-block mb-1">Versión</small>
+                            <span>1.0.0</span>
                         </div>
                     </div>
                 </div>
